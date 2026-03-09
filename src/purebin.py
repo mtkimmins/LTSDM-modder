@@ -1,8 +1,8 @@
 #######################################
 #   CONSTANTS/VARS
 #######################################
-REFERENCE_PATH_1 = "LTSDM-RePulse/samples/BSLSBSBaseM.bin"
-REFERENCE_PATH_2 = "LTSDM-RePulse/samples/MLionGS.bin"
+REFERENCE_PATH_1 = "src/samples/BSLSBSBaseM.bin"
+REFERENCE_PATH_2 = "src/samples/MLionGS.bin"
 BAUD_RATES:list = [9600, 14400, 19200, 28800, 38400, 57600, 115200]
 
 
@@ -309,28 +309,28 @@ class Repulse:
         self.data_references:list[HexFile] = [reference1, reference2]
         self.baud_rate:int = 0
         self.dump_n:int = 5
-        self.arduino_port:str = ""
+        # self.arduino_port:str = ""
 
-    def printPorts(self)->None:
-        port_list:list = self.listPorts()
-        for port in port_list:
-            print(port.device)
+    # def printPorts(self)->None:
+    #     port_list:list = self.listPorts()
+    #     for port in port_list:
+    #         print(port.device)
   
-    def setPort(self)->bool:
-        port_string:str = input("Select port")
-        port_list:list = self.listPorts()
-        port_paths:list = []
-        if port_string in self.listPortPaths:
-            self.arduino_port = port_string
-        else:
-            print("NOT A PORT. Selection failed.")
+    # def setPort(self)->bool:
+    #     port_string:str = input("Select port")
+    #     port_list:list = self.listPorts()
+    #     port_paths:list = []
+    #     if port_string in self.listPortPaths:
+    #         self.arduino_port = port_string
+    #     else:
+    #         print("NOT A PORT. Selection failed.")
 
-    def listPortPaths(self)->list:
-        port_list = self.listPorts()
-        paths:list = []
-        for port in port_list:
-            paths.append(port.device)
-        return paths
+    # def listPortPaths(self)->list:
+    #     port_list = self.listPorts()
+    #     paths:list = []
+    #     for port in port_list:
+    #         paths.append(port.device)
+    #     return paths
 
     def dumpData(self, baud_rate:int, file_path:str)->bool:
         return True
@@ -351,31 +351,31 @@ class Repulse:
         pass
 
     #TODO
-    def listPorts(self)->list:
-        port_list:list = list_ports.comports()
-        return port_list
+    # def listPorts(self)->list:
+    #     port_list:list = list_ports.comports()
+    #     return port_list
 
-    def selectArduinoPort(self)->object|None:
-        port = None
+    # def selectArduinoPort(self)->object|None:
+    #     port = None
 
-        # Scan for arduinos
-        arduino_port_list:list = self.scanForArduinoPorts()
+    #     # Scan for arduinos
+    #     arduino_port_list:list = self.scanForArduinoPorts()
 
-        # List and select arduinos
-        if len(arduino_port_list) > 1:
-            # User select Arduino
-            port = self.inputSelectArduinoPort(arduino_port_list)
+    #     # List and select arduinos
+    #     if len(arduino_port_list) > 1:
+    #         # User select Arduino
+    #         port = self.inputSelectArduinoPort(arduino_port_list)
         
-        # Confirm arduino
-        if self.confirmArduinoSelect(port):
-                # continue
-                pass
+    #     # Confirm arduino
+    #     if self.confirmArduinoSelect(port):
+    #             # continue
+    #             pass
         
-        # Return Arduino
-        return port
+    #     # Return Arduino
+    #     return port
 
-    def confirmArduinoSelect(self, port_index)->bool:
-        return True
+    # def confirmArduinoSelect(self, port_index)->bool:
+    #     return True
 
     def inputSelectArduino(self, arduino_list:list)->int:
         # If there are more than 1 arduino, ask user to select
@@ -447,4 +447,3 @@ reference2 = HexFile(hex_data2)
 
 # TESTS
 repulse = Repulse()
-repulse.printPorts()
