@@ -2,6 +2,7 @@ import purebin
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
+
 #########################################
 #   FUNC/CLASSES
 #########################################
@@ -77,6 +78,7 @@ class StoryContainer:
         #from patterns, construct a full .bin
         #insert frames 1-12 as .a18
         #export the custom .bin
+        # Implement John-k a1800 codec using pypi
 
 #################
 #   RUNTIME     #
