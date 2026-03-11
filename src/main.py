@@ -1,4 +1,5 @@
 import purebin
+import a1800_codec
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
@@ -47,6 +48,14 @@ class AudioFrame:
         self.audio_file_path = ""
         self.updateFileName()
 
+    def compile(self)->None:
+        with open(self.audio_file_path, "rb") as bin:
+            pcm_bytes = bin.read()
+        a18_data = a1800_codec.encode(pcm_bytes, bitrate=16000)
+        with open("out.a18", "wb") as bin:
+            bin.write(a18_data)
+
+
 
 
 class StoryContainer:
@@ -72,6 +81,7 @@ class StoryContainer:
             frame.clear()
 
     def compile(self):
+        self.frames[0].compile()
         pass
         #no lights data
         #take each frame data and turn it into an .a18
