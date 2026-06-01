@@ -5,7 +5,6 @@ REFERENCE_PATH_1 = "src/samples/BSLSBSBaseM.bin"
 REFERENCE_PATH_2 = "src/samples/MLionGS.bin"
 BAUD_RATES:list = [9600, 14400, 19200, 28800, 38400, 57600, 115200]
 
-
 #######################################
 #   CLASSES/FUNC
 #######################################
@@ -44,7 +43,71 @@ class DataLoader:
                     h = hex(byte)
                     file_list.append(h)
         return file_list
+
+
+
+class LTSDM:
+    def __init__(self, file_path:str)->None:
+        # Generate all sections with previously defined sections
+        # General
+        self.file_path:str = file_path
+        self.data:list = open(self.file_path, "rb").read()
+        self.length:int =  int(0xFFFFF)
+        self.pointer_frame:int = 4
+        self.total_pointers_n:int = 26
+        self.segment_4_region_lengths:list[int] = [326, 926, 1006, 1006, 806, 726, 606, 686, 446, 886, 406, 726]
+        
+        # Segment 1
+        self.s1:list[bytes] = self.data[0x0:0x6c]
+        self.s1_magic:bytes = self.s1[0:self.pointer_frame]
+        self.s1_byte_pointers:list[bytes] = self.get_s1_pointers()
+        self.s1_int_pointers:list[int] = []
+        for i in self.s1_byte_pointers:
+            self.s1_int_pointers.append(int.from_bytes(i, byteorder='little'))
+        
+        
+        # Segment 2
+        self.s21_length:int = self.data[self.s1_int_pointers[0]:self.s1_int_pointers[0]+self.pointer_frame]
+        self.s21:list[bytes] = self.data[self.s1_int_pointers[0]:self.s1_int_pointers[1]]
+        self.s22_length:int = self.data[self.s1_int_pointers[1]:self.s1_int_pointers[1]+self.pointer_frame]
+        self.s22:list[bytes] = self.data[self.s1_int_pointers[1]:self.s1_int_pointers[2]]
+
+        # Segment 3
+        self.s3:list[bytes] = self.data[self.s1_int_pointers[2]:self.s1_int_pointers[15]] # Regions 1-12, unique to each story data; validated
+        self.r1:list[bytes] = None
+        self.r2:list[bytes] = None
+        self.r3:list[bytes] = None
+        self.r4:list[bytes] = None
+        self.r5:list[bytes] = None
+        self.r6:list[bytes] = None
+        self.r7:list[bytes] = None
+        self.r8:list[bytes] = None
+        self.r9:list[bytes] = None
+        self.r10:list[bytes] = None
+        self.r11:list[bytes] = None
+        self.r12:list[bytes] = None
+
+        self.s4:list[list[bytes]] = None
+        self.s6:list[bytes] = self.data[0xFFF80:0xFFF90] # Validated
+    def get_s1_pointers(self)->list:
+        pointers:list[bytes] = []
+        for i in range(self.total_pointers_n):
+            pointer:bytes = self.data[self.pointer_frame + (self.pointer_frame*i):self.pointer_frame + (self.pointer_frame*i) + self.pointer_frame]
+            pointers.append(pointer)
+        return pointers
+
+    def get_length_range(self, address:bytes)->range:
+        a = int.from_bytes(address, byteorder='little')
+        r = range(a, a + self.pointer_frame)
+        return r
     
+    def get_body_range(self, address:bytes)->range:
+        a = int.from_bytes(address, byteorder='little')
+        r = range(a + self.pointer_frame, a + self.pointer_frame + int.from_bytes(self.data[self.get_length_range(address)], byteorder='little'))
+        return r
+
+
+
 
 #TODO -- streamline hexfile creation (pointer, length, ->hex)
 class HexFile:
@@ -440,10 +503,14 @@ class Repulse:
 #######################################
 #   RUNTIME
 #######################################
-hex_data1 = DataLoader().loadBinarytoMatrix(REFERENCE_PATH_1)
-hex_data2 = DataLoader().loadBinarytoMatrix(REFERENCE_PATH_2)
-reference1 = HexFile(hex_data1)
-reference2 = HexFile(hex_data2)
+# hex_data1 = DataLoader().loadBinarytoMatrix(REFERENCE_PATH_1)
+# hex_data2 = DataLoader().loadBinarytoMatrix(REFERENCE_PATH_2)
+# reference1 = HexFile(hex_data1)
+# reference2 = HexFile(hex_data2)
+b1 = LTSDM(REFERENCE_PATH_2)
+print(b1.s6)
+# for i in b1.s21:
+#     print(hex(i))
 
-# TESTS
-repulse = Repulse()
+# # TESTS
+# repulse = Repulse()

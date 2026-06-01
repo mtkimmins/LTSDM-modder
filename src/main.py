@@ -3,6 +3,10 @@ import a1800_codec
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
+#########################################
+#   CONSTANTS AND VARS
+#########################################
+
 
 #########################################
 #   FUNC/CLASSES
