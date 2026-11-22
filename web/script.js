@@ -11,8 +11,8 @@ DONE
 //////////////////////////////////////////
 //  MODULES/IMPORTS
 //////////////////////////////////////////
-import init, { encode_pcm } from "./a1800-wasm/pkg/a1800_wasm.js"
-await init();
+//import init, { encode_pcm } from "./a1800-wasm/pkg/a1800_wasm.js"
+//await init();
 /*
 // Generate 1 second of synthetic 440 Hz audio at 16 kHz.
 const sampleRate = 16000;
