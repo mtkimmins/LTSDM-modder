@@ -163,6 +163,11 @@ function generateFrameElements() {
         let nextFrame = frame.cloneNode(true);
         nextFrame.id = "frame" + (frame_elements.length + 1);
         nextFrame.querySelector("#frame-number").textContent = frame_elements.length + 1;
+        // label all children of the frame with their index
+        const children = nextFrame.querySelectorAll("*");
+        children.forEach((child, index) => {
+            child.dataset.index = index;
+        });
         frame_elements.push(nextFrame);
     }
     console.log("Generated frame elements:", frame_elements);
