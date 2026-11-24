@@ -104,7 +104,17 @@ addFrameElements();
 frame_elements.forEach((frame) => {
     let uploadButton = frame.querySelector(".audio-upload-button");
     let audioInput = frame.querySelector(".audio-input");
+    let fileName = frame.querySelector(".file-name");
+    
+    // trigger the upload input when the button is clicked
     uploadButton.addEventListener("click", () => {
         audioInput.click();
+    });
+
+    // display the selected file name when a file is chosen
+    audioInput.addEventListener("change", () => {
+        if (audioInput.files.length > 0) {
+            fileName.textContent = audioInput.files[0].name;
+        }
     });
 });
