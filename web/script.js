@@ -105,6 +105,8 @@ frame_elements.forEach((frame) => {
     let uploadButton = frame.querySelector(".audio-upload-button");
     let audioInput = frame.querySelector(".audio-input");
     let fileName = frame.querySelector(".file-name");
+    let format = frame.querySelector(".format");
+    let ogSize = frame.querySelector(".og-size");
     
     // trigger the upload input when the button is clicked
     uploadButton.addEventListener("click", () => {
@@ -115,6 +117,8 @@ frame_elements.forEach((frame) => {
     audioInput.addEventListener("change", () => {
         if (audioInput.files.length > 0) {
             fileName.textContent = audioInput.files[0].name;
+            format.textContent = audioInput.files[0].name.split('.').pop().toUpperCase();
+            ogSize.textContent = audioInput.files[0].size;
         }
     });
 });
