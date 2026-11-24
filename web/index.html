@@ -20,71 +20,101 @@
                 <!--populate with 12 frames as children here-->
                 <div id="frame" class="v-split">
 
-                    <div id="information-container" class="h-split">
-                        <div id="id-col" class="v-split">
-                            <div id="frame-number">1</div>
-                            <button id="audio-upload-button">Upload Audio</button>
-                            <input id="audio-input" type="file" accept=".wav" hidden>
+                    <div class="information-container h-split">
+                        <div class="id-col v-split">
+                            <div class="frame-number">1</div>
+                            <button class="audio-upload-button">Upload Audio</button>
+                            <input class="audio-input" type="file" accept=".wav" hidden>
                         </div>
-                        <div id="info-col" class="h-split">
-                            <div id="data-info-col" class="v-split">
-                                <div id="data-info-col-title">Data Info</div>
-                                <div id="file-name">File Name: ---.audio</div>
-                                <div id="format">Format: </div>
-                                <div id="audio-length">Audio Length: --:--</div>
+                        <div class="info-col h-split">
+                            <div class="data-info-col v-split">
+                                <span class="title">Data Info</span>
+                                <div>
+                                    <span class="title">File Name:</span>
+                                    <span class="file-name">---.audio</span>
+                                </div>
+                                <div>
+                                    <span class="title">Format: </span>
+                                    <span class="format">.type</span>
+                                </div>
+                                <div>
+                                    <span class="title">Length: </span>
+                                    <span class="length">--:--</span>
+                                </div>
                             </div>
-                            <div id="1-size-col" class="v-split">
-                                <div id="1-size-col-title">Audio File Sizes</div>
-                                <div id="og-size"></div>Original Upload Size:
-                                <div id="std-pcm-size">Mono 16-Bit-Signed 16kHz PCM Size: </div>
-                                <div id="a1800-size">A1800 Size: </div>
+                            <div class="file-size-col v-split">
+                                <span class="title">Audio File Sizes</span>
+                                <div>
+                                    <span class="title">Original Upload Size: </span>
+                                    <span class="og-size">---</span>
+                                    <span> Bytes</span>
+                                </div>
+                                <div>
+                                    <span class="title">Mono 16-Bit-Signed 16kHz PCM Size: </span>
+                                    <span class="std-pcm-size">---</span>
+                                    <span> Bytes</span>
+                                </div>
+                                <div>
+                                    <span class="title">A1800 Size: </span>
+                                    <span class="a1800-size">---</span>
+                                    <span> Bytes</span>
+                                </div>
                             </div>
-                            <div id="2-size-col" class="v-split">
-                                <div id="2-size-col-title">Byte Sizes</div>
-                                <div id="header-size">Header Size: Bytes</div>
-                                <div id="payload-size">Payload Size: Bytes</div>
-                                <div id="region-size">Region Size: Bytes</div>
+                            <div class="byte-size-col v-split">
+                                <span class="title">Byte Sizes</span>
+                                <div>
+                                    <span class="title">Header Size: </span>
+                                    <span class="header-size">---</span>
+                                    <span> Bytes</span>
+                                </div>
+                                <div>
+                                    <span class="title">Payload Size: </span>
+                                    <span class="payload-size">---</span>
+                                    <span> Bytes</span>
+                                </div>
+                                <div>
+                                    <span class="title">Region Size: </span>
+                                    <span class="region-size">---</span>
+                                    <span> Bytes</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div id="audio-playback-row" class="h-split">
-                        <div id="play-buttons-col" class="h-split">
-                            <button id="play-button">|></button>
-                            <button id="stop-button">[]</button>
+                    <div class="audio-playback-row h-split">
+                        <div class="play-buttons-col h-split">
+                            <button class="play-button">|></button>
+                            <button class="stop-button">[]</button>
                         </div>
-                        <div id="light-title">Light Data</div>
+                        <div class="light-title">Light Data</div>
                     </div>
 
-                    <div id="light-mixer-container" class="v-split">
-                        <div id="overall-times" class="h-split">
-                            <div id="time-start">00:00</div>
-                            <div id="time-end">--:--</div>
+                    <div class="light-mixer-container v-split">
+                        <div class="overall-times h-split">
+                            <div class="time-start">00:00</div>
+                            <div class="time-end">--:--</div>
                         </div>
-                        <div id="segments-display" class="h-scroll"></div>
-                        <div id="overall-slider"></div>
-                        <div id="utility-row" class="h-split">
-                            <button id="cut-button">Cut</button>
-                            <input id="current-time" type="text">--:--</input>
-                            <button id="assign-colour-button">Assign Colour</button>
+                        <div class="segments-display h-scroll"></div>
+                        <div class="overall-slider"></div>
+                        <div class="utility-row h-split">
+                            <button class="cut-button">Cut</button>
+                            <input class="current-time" type="text">--:--</input>
+                            <button class="assign-colour-button">Assign Colour</button>
                         </div>
                     </div>
 
-                    <div id="film-image-container">
-                        <div id="image-viewer">
-                            <div id="image-mask">
-                                <div id="image-viewport"></div>
+                    <div class="film-image-container">
+                        <div class="image-viewer">
+                            <div class="image-mask">
+                                <div class="image-viewport"></div>
                             </div>
                         </div>
-                        <div id="image-buttons" class="h-split">
-                            <button id="image-upload-button">Upload Film Image</button>
-                            <button id="image-edit-button">Lock/Unlock</button>
+                        <div class="image-buttons h-split">
+                            <button class="image-upload-button">Upload Film Image</button>
+                            <button class="image-edit-button">Lock/Unlock</button>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
 
             <!--this is sticky to the bottom and shows data room, progress, and the ability to fully compile everything-->
