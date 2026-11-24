@@ -96,7 +96,7 @@ const audioInput = document.getElementById("audio-input");
 
 //VARS
 let image_lock = false;
-
+let frame_elements = [];
 
 
 
@@ -154,9 +154,27 @@ function toggleImageEdits(){
 ///////////////////////////////////////////
 //      CREATION
 ///////////////////////////////////////////
-function generateFrameElements() {};
+function generateFrameElements() {
+    if (frame_elements.length == 0) {
+        frame_elements.push(frame);
+    };
+    while (frame_elements.length < 12) {
+        // Clone the frame element and append it to the array
+        let nextFrame = frame.cloneNode(true);
+        nextFrame.id = "frame" + (frame_elements.length + 1);
+        frame_elements.push(nextFrame);
+    }
+    console.log("Generated frame elements:", frame_elements);
+}
 
-function addFrameElements() {};
+function addFrameElements() {
+    //check what frames are already children of the data container
+    for (let i = 0; i < frame_elements.length; i++) {
+        if (!dataContainer.contains(frame_elements[i])) {
+            dataContainer.appendChild(frame_elements[i]);
+        }
+    }
+};
 
 function initializeLTSDMElements() {};
 
@@ -264,3 +282,7 @@ async function encodeAudio(file){
 //Assign the event listeners
 uploadAudioButton.addEventListener("click",uploadAudio);
 audioInput.addEventListener("change", processAudio);
+
+//Generate the frame elements
+generateFrameElements();
+addFrameElements();
