@@ -20,27 +20,27 @@
                 <!--populate with 12 frames as children here-->
                 <div id="frame" class="v-split">
 
-                    <div id="row2-1" class="h-split">
+                    <div id="information-container" class="h-split">
                         <div id="id-col" class="v-split">
                             <div id="frame-number">1</div>
                             <button id="audio-upload-button">Upload Audio</button>
                             <input id="audio-input" type="file" accept=".wav" hidden>
                         </div>
                         <div id="info-col" class="h-split">
-                            <div id="col-1" class="v-split">
-                                <div id="col-1-title">Data Info</div>
+                            <div id="data-info-col" class="v-split">
+                                <div id="data-info-col-title">Data Info</div>
                                 <div id="file-name">File Name: ---.audio</div>
                                 <div id="format">Format: </div>
                                 <div id="audio-length">Audio Length: --:--</div>
                             </div>
-                            <div id="col-2" class="v-split">
-                                <div id="col-2-title">Audio File Sizes</div>
+                            <div id="1-size-col" class="v-split">
+                                <div id="1-size-col-title">Audio File Sizes</div>
                                 <div id="og-size"></div>Original Upload Size:
                                 <div id="std-pcm-size">Mono 16-Bit-Signed 16kHz PCM Size: </div>
                                 <div id="a1800-size">A1800 Size: </div>
                             </div>
-                            <div id="col-3" class="v-split">
-                                <div id="col-3-title">Byte Sizes</div>
+                            <div id="2-size-col" class="v-split">
+                                <div id="2-size-col-title">Byte Sizes</div>
                                 <div id="header-size">Header Size: Bytes</div>
                                 <div id="payload-size">Payload Size: Bytes</div>
                                 <div id="region-size">Region Size: Bytes</div>
@@ -48,7 +48,7 @@
                         </div>
                     </div>
 
-                    <div id="row2-2" class="h-split">
+                    <div id="audio-playback-row" class="h-split">
                         <div id="play-buttons-col" class="h-split">
                             <button id="play-button">|></button>
                             <button id="stop-button">[]</button>
@@ -56,7 +56,7 @@
                         <div id="light-title">Light Data</div>
                     </div>
 
-                    <div id="row2-3" class="v-split">
+                    <div id="light-mixer-container" class="v-split">
                         <div id="overall-times" class="h-split">
                             <div id="time-start">00:00</div>
                             <div id="time-end">--:--</div>
@@ -70,7 +70,7 @@
                         </div>
                     </div>
 
-                    <div id="row2-4">
+                    <div id="film-image-container">
                         <div id="image-viewer">
                             <div id="image-mask">
                                 <div id="image-viewport"></div>
@@ -89,7 +89,7 @@
 
             <!--this is sticky to the bottom and shows data room, progress, and the ability to fully compile everything-->
             <div id="summary-panel">
-                <div id="row3-1" class="h-split">
+                <div id="data-stats-container" class="h-split">
                     <!--horizontal splits-->
                     <div id="template-data-counter" class="v-split">
                         <div>Template Data Volume</div>
@@ -108,10 +108,10 @@
                         <div>1048576 Bytes</div>
                     </div>
                 </div>
-                <div id="row3-2">
+                <div id="capacity-bar-container">
                     <div id="capacity-bar">===</div>
                 </div>
-                <div id="row3-3" class="h-split">
+                <div id="compile-controls" class="h-split">
                     <div id="reticle">O</div>
                     <button id="full-compile-button">Full Compile</button>
                     <div id="compile-location">

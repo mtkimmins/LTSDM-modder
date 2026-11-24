@@ -162,6 +162,14 @@ function generateFrameElements() {
         // Clone the frame element and append it to the array
         let nextFrame = frame.cloneNode(true);
         nextFrame.id = "frame" + (frame_elements.length + 1);
+        nextFrame.querySelector("#frame-number").textContent = frame_elements.length + 1;
+        // label all children of the frame with their name + their frame number
+        const children = nextFrame.querySelectorAll("*");
+        children.forEach(child => {
+            if (child.id) {
+                child.id = child.id + "-" + (frame_elements.length + 1);
+            }
+        });
         frame_elements.push(nextFrame);
     }
     console.log("Generated frame elements:", frame_elements);
