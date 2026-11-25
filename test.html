@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" id="fileInput" accept=".wav">
+    <script>
+        let audioContext = new AudioContext({ sampleRate: 16000 });
+        let fileInput = document.getElementById("fileInput");
+        fileInput.addEventListener("change", async (event) => {
+            let file = event.target.files[0];
+            if (file) {
+                let arrayBuffer = await file.arrayBuffer();
+                let audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+                let lengthInSeconds = audioBuffer.duration;
+                console.log("Audio length in seconds:", lengthInSeconds);
+                console.log("Sample Rate:", audioBuffer.sampleRate);
+                console.log("Number of Channels:", audioBuffer.numberOfChannels);
+                console.log("Length in samples:", audioBuffer.length);
+            }
+        });
+    </script>
+</body>
+</html>
