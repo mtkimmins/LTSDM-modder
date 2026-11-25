@@ -100,6 +100,9 @@ function initializeLTSDMElements() {};
 generateFrameElements();
 addFrameElements();
 
+//Initialize the AudioContext
+let audioContext = new AudioContext({ sampleRate: 16000 });
+
 //list of frames
 frame_elements.forEach((frame) => {
     let uploadButton = frame.querySelector(".audio-upload-button");
@@ -115,12 +118,55 @@ frame_elements.forEach((frame) => {
     });
 
     // display the selected file name when a file is chosen
-    audioInput.addEventListener("change", () => {
+    audioInput.addEventListener("change", async () => {
         if (audioInput.files.length > 0) {
             fileName.textContent = audioInput.files[0].name;
             format.textContent = audioInput.files[0].name.split('.').pop().toUpperCase();
             ogSize.textContent = audioInput.files[0].size;
             
+            //get the initial array buffer
+            let arrayBuffer = await audioInput.files[0].arrayBuffer();
+            //decode the audio data
+            let audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+            //mix to mono if necessary
+            let monoBuffer = audioBuffer;
+            if (audioBuffer.numberOfChannels > 1) {
+                monoBuffer = audioContext.createBuffer(1, audioBuffer.length, audioBuffer.sampleRate);
+            }
+            //turn monoBuffer into 16-bit signed integer PCM data
+            const samples = monoBuffer.getChannelData(0);
+            const sampleRate = monoBuffer.sampleRate;
+            const dataSize = samples.length * 2; // 2 bytes per sample for 16-bit audio
+            const buffer = new ArrayBuffer(44 + dataSize);
+            const view = new DataView(buffer);
+            
+            function writeString(offset, string) {
+                for (let i = 0; i < string.length; i++) {
+                    view.setUint8(offset + i, string.charCodeAt(i));
+                }
+            }
+            
+            // Write WAV header
+            writeString(0, 'RIFF');
+            view.setUint32(4, 36 + dataSize, true);
+            writeString(8, 'WAVE');
+            writeString(12, 'fmt ');
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true);
+            view.setUint16(22, 1, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * 2, true);
+            view.setUint16(32, 2, true);
+            view.setUint16(34, 16, true);
+            writeString(36, 'data');
+            view.setUint32(40, dataSize, true);                       
+
+            for (let i = 0; i < samples.length; i++) {
+                const s = Math.max(-1, Math.min(1, samples[i]));
+                view.setInt16(44 + i * 2, Math.round(s * 32767), true);
+            }
+
+
             let audioElement = document.createElement("audio");
             audioElement.src = URL.createObjectURL(audioInput.files[0]);
             audioElement.addEventListener("loadedmetadata", () => {
