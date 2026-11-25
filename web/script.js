@@ -107,6 +107,7 @@ frame_elements.forEach((frame) => {
     let fileName = frame.querySelector(".file-name");
     let format = frame.querySelector(".format");
     let ogSize = frame.querySelector(".og-size");
+    let length = frame.querySelector(".length");
     
     // trigger the upload input when the button is clicked
     uploadButton.addEventListener("click", () => {
@@ -119,6 +120,17 @@ frame_elements.forEach((frame) => {
             fileName.textContent = audioInput.files[0].name;
             format.textContent = audioInput.files[0].name.split('.').pop().toUpperCase();
             ogSize.textContent = audioInput.files[0].size;
+            
+            let audioElement = document.createElement("audio");
+            audioElement.src = URL.createObjectURL(audioInput.files[0]);
+            audioElement.addEventListener("loadedmetadata", () => {
+                let duration = audioElement.duration;
+                let durationMinutes = Math.floor(duration/60);
+                let durationSeconds = Math.floor(duration % 60);
+                let durationFormatted = durationMinutes.toString().padStart(2, '0') + ":" + durationSeconds.toString().padStart(2, '0');
+                length.textContent = durationFormatted;
+                audioElement.remove(); // Clean up the audio element after getting the duration
+            });
         }
     });
 });
