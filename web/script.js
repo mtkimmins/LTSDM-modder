@@ -120,10 +120,12 @@ frame_elements.forEach((frame) => {
     // display the selected file name when a file is chosen
     audioInput.addEventListener("change", async () => {
         if (audioInput.files.length > 0) {
+            //populates the name, format, and size
             fileName.textContent = audioInput.files[0].name;
             format.textContent = audioInput.files[0].name.split('.').pop().toUpperCase();
             ogSize.textContent = audioInput.files[0].size;
             
+            //processes the upload to std-WAV PCM
             //get the initial array buffer
             let arrayBuffer = await audioInput.files[0].arrayBuffer();
             //decode the audio data
@@ -165,9 +167,12 @@ frame_elements.forEach((frame) => {
                 const s = Math.max(-1, Math.min(1, samples[i]));
                 view.setInt16(44 + i * 2, Math.round(s * 32767), true);
             }
+
+            //stashes the std-wav PCM for later
+            //Please copy this before you manipulate it
             frame.ArrayBuffer = buffer;
 
-
+            // Needed for getting the LENGTH
             let audioElement = document.createElement("audio");
             audioElement.src = URL.createObjectURL(audioInput.files[0]);
             audioElement.addEventListener("loadedmetadata", () => {
@@ -179,6 +184,7 @@ frame_elements.forEach((frame) => {
                 audioElement.remove(); // Clean up the audio element after getting the duration
             });
         }
+        /*
         console.log("ArrayBuffer for frame " + frame.id + ":", frame.ArrayBuffer);
         let copyBuffer = frame.ArrayBuffer.slice(0); // Create a copy of the ArrayBuffer
         let copyAudioBuffer = await audioContext.decodeAudioData(copyBuffer);
@@ -186,6 +192,6 @@ frame_elements.forEach((frame) => {
         audioSource.buffer = copyAudioBuffer;
         audioSource.connect(audioContext.destination);
         audioSource.start();
-
+        */
     });
 });
