@@ -165,6 +165,7 @@ frame_elements.forEach((frame) => {
                 const s = Math.max(-1, Math.min(1, samples[i]));
                 view.setInt16(44 + i * 2, Math.round(s * 32767), true);
             }
+            frame.ArrayBuffer = buffer;
 
 
             let audioElement = document.createElement("audio");
@@ -178,5 +179,13 @@ frame_elements.forEach((frame) => {
                 audioElement.remove(); // Clean up the audio element after getting the duration
             });
         }
+        console.log("ArrayBuffer for frame " + frame.id + ":", frame.ArrayBuffer);
+        let copyBuffer = frame.ArrayBuffer.slice(0); // Create a copy of the ArrayBuffer
+        let copyAudioBuffer = await audioContext.decodeAudioData(copyBuffer);
+        let audioSource = audioContext.createBufferSource();
+        audioSource.buffer = copyAudioBuffer;
+        audioSource.connect(audioContext.destination);
+        audioSource.start();
+
     });
 });
