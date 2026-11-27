@@ -6,7 +6,7 @@ pub fn encode_pcm(pcm: &[i16]) -> Vec<u8> {
     let mut encoder = A1800Encoder::new(16000).unwrap();
     let frame_words = encoder.encoded_frame_size();
     let frame_bytes = frame_words * 2;
-    let num_frames = (pcm.len() + 319) / 320;
+    let num_frames = pcm.len() / 320;
     
     let mut output: Vec<u8> = Vec::new();
     
@@ -18,7 +18,7 @@ pub fn encode_pcm(pcm: &[i16]) -> Vec<u8> {
         input[..chunk.len()].copy_from_slice(chunk);
         
         let mut frame_out = vec![0i16; frame_words];
-        encoder.encode_frame(&input, &mut frame_out).unwrap();
+        encoder.encode_frame(chunk, &mut frame_out).unwrap();
 
         for word in frame_out {
             output.extend_from_slice(&word.to_le_bytes());
