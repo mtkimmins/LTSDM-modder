@@ -13,9 +13,9 @@ pub fn encode_pcm(pcm: &[i16]) -> Vec<u8> {
     output.extend_from_slice(&((num_frames * frame_bytes) as u32).to_le_bytes());
     output.extend_from_slice(&16000u16.to_le_bytes());
 
-    for chunk in pcm.chunks(320) {
-        let mut input = [0i16; 320];
-        input[..chunk.len()].copy_from_slice(chunk);
+    for chunk in pcm.chunks_exact(320) {
+        //let mut input = [0i16; 320];
+        //input[..chunk.len()].copy_from_slice(chunk);
         
         let mut frame_out = vec![0i16; frame_words];
         encoder.encode_frame(chunk, &mut frame_out).unwrap();
