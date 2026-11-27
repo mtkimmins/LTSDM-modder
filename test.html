@@ -6,8 +6,24 @@
     <title>Document</title>
 </head>
 <body>
-    <script>
-        
+    <script type="module">
+        import init, { encode_pcm} from './web/a1800/pkg/a1800.js';
+
+        await init();
+        console.log('WASM loaded');
+
+        //Sine test
+        const pcm = new Int16Array(16000);
+        for (let i = 0; i < 16000; i++) {
+            pcm[i] = Math.round(10000 * Math.sin(2 * Math.PI * 440 * i / 16000));
+        }
+
+        const out = encode_pcm(pcm);
+        console.log('Sine test bytes:', out.length, '(expect 2006)');
+
+        const frameBytes = out[0] | (out[1] << 8) | (out[2] << 16) | (out[3] << 24);
+        const bitrate = out[4] | (out[5] << 8);
+        console.log('Header frame bytes:', frameBytes, 'bitrate:', bitrate);
     </script>
 </body>
 </html>
