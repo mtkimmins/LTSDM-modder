@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+    <input type="file" id="wav-file" accept=".wav">
     <script type="module">
         import init, { encode_pcm} from './web/a1800/pkg/a1800.js';
 
@@ -24,6 +25,22 @@
         const frameBytes = out[0] | (out[1] << 8) | (out[2] << 16) | (out[3] << 24);
         const bitrate = out[4] | (out[5] << 8);
         console.log('Header frame bytes:', frameBytes, 'bitrate:', bitrate);
+
+        //Real converter
+        const fileInput = document.getElementById("wav-file");
+        fileInput.addEventListener("change", async () => {
+            const file = fileInput.files[0];
+            const buffer = await file.arrayBuffer();
+            const pcm = new Int16Array(buffer.slice(44));
+            const out = encode_pcm(pcm);
+            console.log('Encoded bytes:', out.length);
+
+            const blob = new Blob([out], { type: 'application/octet-stream' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = file.name.replace(/\.wav$/i, '.a18');
+            a.click();
+        });
     </script>
 </body>
 </html>
